@@ -1,7 +1,7 @@
 # This Python file uses the following encoding: utf-8
 import telebot
 from bitcoinrpc.authproxy import AuthServiceProxy, JSONRPCException
-TOKEN = "7108513768:AAGysLA4v8pBmm5g9TWkx-lT6uJLRPvqzfg"
+TOKEN = "7048836769:AAEv_2XDOETUksLXAQWzOCnmDjp9YsEexw8"
 rpc_user = 'kzcashrpc'
 rpc_password = '123123123'
 
