@@ -44,7 +44,7 @@ def send_coins(message):
 
     try:
         inputs = rpc_connection.listunspent(0, 9999, [sender_address])
-    except:
+    except JSONRPCException:
         bot.reply_to(message, f"Неправильный адрес кошелька отправителя")
         return
 
@@ -58,7 +58,7 @@ def send_coins(message):
     inputForTransaction = {"txid":temp.get("txid"), "vout": temp.get("vout")}
     try:
         createTransaction = rpc_connection.createrawtransaction([inputForTransaction], {receiver_address:amount, sender_address:fee})
-    except:
+    except JSONRPCException:
         bot.reply_to(message, f"Неправильный адрес кошелька получателя")
         return
     signTransaction = rpc_connection.signrawtransaction(createTransaction)
@@ -74,7 +74,7 @@ def get_address_balance(message):
         return
     try:
         balance = addressBalance(args)
-    except:
+    except JSONRPCException:
         bot.reply_to(message, f"Неправильный адрес кошелька ")
         return
     bot.reply_to(message, f"Баланс адреса: {balance} KZC")
