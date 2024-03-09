@@ -66,7 +66,7 @@ def send_coins(message):
     txid = rpc_connection.sendrawtransaction(receivedHex)
     bot.reply_to(message, f"Монеты отправлены получателю! ID транзакции: {txid}")
 
-@bot.message_handler(commands=['getadressbalance'])
+@bot.message_handler(commands=['getaddressbalance'])
 def get_address_balance(message):
     args = message.text.split()[1:]
     if len(args) != 1:
