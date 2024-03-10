@@ -19,8 +19,8 @@ def addressBalance(args):
     elif len(inputs) == 1:
         balance += inputs[0].get("amount")
     else:
-        for i in (0, len(inputs)-1):
-            balance += inputs[i].get("amount")
+        for i in inputs:
+            balance += i.get("amount")
     return balance
 
 @bot.message_handler(commands=['getnewaddress'])
@@ -36,22 +36,24 @@ def get_balance(message):
 
 @bot.message_handler(commands=['send'])
 def send_coins(message):
+    global temp
     args = message.text.split()[1:]
     if len(args) != 3:
         bot.reply_to(message, "Шаблон: /send <адрес отправителя> <адрес получателя> <сумма>")
         return
     sender_address, receiver_address, amount = args
-
+ # vhody
     try:
         inputs = rpc_connection.listunspent(0, 9999, [sender_address])
     except JSONRPCException:
         bot.reply_to(message, f"Неправильный адрес кошелька отправителя")
         return
 
-    for i in (0, len(inputs) - 1):
-        temp = inputs[i]
+    for i in inputs:
+        temp = i
         if float(float(temp.get("amount"))) > (float(amount)+0.001):
             break
+    if float(float(temp.get("amount"))) < (float(amount)+0.001):
         bot.reply_to(message, "Недостаточно средств")
         return
     fee = float(temp.get("amount")) - float(amount) - 0.001
